@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client-app
+  template:
+    metadata:
+      labels:
+        app: client-app
+    spec:
+      containers:
+      - name: client-app
+        image: client-app:v1
+        ports:
+        - containerPort: 4002
+        env:
+        - name: RABBITMQ_URL
+          value: "amqp://rabbitmq:5672"
+        - name: MYSQL_HOST
+          value: mysql-service
+        - name: MYSQL_USER
+          value: "root"
+        - name: MYSQL_PASSWORD
+          value: "12345678"
+        - name: MYSQL_DATABASE
+          value: "devopsakademi"

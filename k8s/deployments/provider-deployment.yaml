@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: provider-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: provider-app
+  template:
+    metadata:
+      labels:
+        app: provider-app
+    spec:
+      containers:
+      - name: provider-app
+        image: provider-app:v1
+        ports:
+        - containerPort: 4001
+        env:
+        - name: RABBITMQ_HOST
+          value: rabbitmq

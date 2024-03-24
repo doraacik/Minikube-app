@@ -1,0 +1,17 @@
+{
+  "name": "client-app",
+  "version": "1.0.0",
+  "description": "client app for k8s-app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "node app.js"
+  },
+  "author": "doraacik",
+  "license": "MIT",
+  "dependencies": {
+    "amqplib": "^0.10.3",
+    "express": "^4.19.1",
+    "mysql2": "^3.9.2"
+  }
+}

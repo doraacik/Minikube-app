@@ -71,28 +71,21 @@ async function handleMessage(data) {
     const { method, path, data: requestBody } = data;
 
     try {
-        const client = await pool.getConnection();
-        
         if (method === "POST") {
             const { text } = requestBody;
-            const insertQuery = `INSERT INTO texts (text) VALUES (?)`; // Use "?" as placeholder
-            const [rows, fields] = await client.query(insertQuery, [text]);
-            console.log("Data inserted successfully:", rows);
-        } else if (method === "PUT") {
-            const { id, text } = requestBody;
-            const updateQuery = `UPDATE texts SET text = ? WHERE id = ?`; // Use "?" as placeholder
-            const [rows, fields] = await client.query(updateQuery, [text, id]);
-            console.log("Data updated successfully:", rows);
-        } else if (method === "DELETE") {
-            const id = parseInt(data.data);
-            const deleteQuery = `DELETE FROM texts WHERE id = ?`; // Use "?" as placeholder
-            const [rows, fields] = await client.query(deleteQuery, [id]);
-            console.log("Data deleted successfully:", rows);
+            //const insertQuery = `INSERT INTO texts (text) VALUES (?)`; // Use "?" as placeholder
+            //const [rows, fields] = await client.query(insertQuery, [text]);
+            pool.query("INSERT INTO texts (text) VALUES (?)", [data.data.txt], (error, results) => {
+                if (error) {
+                    console.error("Database query error:", error);
+                } else {
+                    console.log("Data inserted successfully:", results);
+                }
+            });
         } else {
             console.log("Unsupported method:", method);
         }
-        
-        client.release();
+    
     } catch (error) {
         console.error('Error handling message:', error);
     }
